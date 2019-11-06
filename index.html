@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
+		<title>The AIMS Fingerprint</title>
+
+		<!-- Google fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+		
+		<script src="js/jquery-3.3.1.min.js"></script>
+		
+		<script>
+			//added for accessiblity, makes program selection tabs function
+			document.onkeydown = function(e) {
+			  if(e.keyCode === 13) { // The Enter/Return key
+			    document.activeElement.onclick(e);
+			  }
+			};
+		</script>
+		<style>
+			body {
+				font: normal 11px/15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				margin: 0px;
+				padding: 0px;
+				background: rgb(246,246,246);
+				/*
+				background-image: url("img/ipadBackground.png");
+				background-repeat: no-repeat;
+				background-color: #000;
+				*/
+			}
+			body *:focus {
+				outline: 1;
+			}
+			a {
+				color: #C4434A;
+				text-decoration: none;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+			hr {
+				clear: both;
+				margin: 0px;
+				padding: 0px;
+				background-color: #E8E8E8;
+				border: none;
+			}
+			#wrapper {
+				width: 1015px;
+				margin: 0px auto 25px auto;
+				border-right: 5px solid #E8E8E8;
+				border-bottom: 5px solid #E8E8E8;
+				background-color: #fff;
+				-webkit-box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
+				-moz-box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
+				box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
+			}
+			#interface {
+				width: 380px;
+				float: left;
+			}
+			header {
+				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				width: 380px;
+				margin: 0px;
+				padding: 0px;
+				background-color: #C92838;
+				color: #fff;
+			}
+			#fingerprintDisplay {
+				margin-top: 50px;
+				margin-left: 380px;
+				position: fixed;
+			}
+			.axisLabel {
+				opacity: 0;
+			}
+			.screenReadersOnly {
+				font-size: 0px;
+			}
+			
+			#courseList {
+				width: 380px;
+				background-color: #E8E8E8;
+				padding-bottom: 150px;
+			}
+			#programSelection h3 {
+				font: bold 12px/8px 'Adelle MU';
+				margin: 10px 0px 3px 0px;
+				padding: 0px;
+			}
+			#programSelection h4 {
+				font: italic 9px/8px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+				margin: 0px 0px 10px 0px;
+				padding: 0px;
+			}
+			#programSelection ul {
+				list-style-type: none;
+				margin: 0px;
+				padding: 0px;
+			}
+			#programSelection ul li {
+				width: 25%;
+				float: left;
+				text-align: center;
+				background-color: #772A2F;
+				color: #DEDDDE;
+			}
+			#programSelection ul li.selected {
+				background-color: #C92838;
+				color: #fff;
+			}
+			
+			#programIntroduction {
+				clear: both;
+				background-color: #E8E8E8;
+			}
+			#programIntroduction p {
+				padding: 10px 10px 15px 10px;
+			}
+			
+			#masterCourseList {
+				padding: 0px 10px 0px 10px;
+			}
+			#masterCourseList h3 {
+				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			}
+			#masterCourseList ul {
+				list-style-type: none;
+				background-color: #F2F2F2;
+				margin-top: 5px;
+				margin-bottom: 5px;
+				padding: 5px 0px 5px 15px;
+			}
+			/* turning off because it causes problem with fieldset
+			#masterCourseList ul:hover {
+				background-color: #fff;
+			}
+			*/
+			#masterCourseList ul li ul {
+				padding: 0px 0px 0px 15px;
+				background-color: transparent;
+			}
+			/* bookmark */
+			/* removing all this due to use of legend and fieldset
+			#masterCourseList ul li:first-child {
+				font: italic 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 500;
+			}
+			#masterCourseList ul.noProgram li:first-child {
+				font: normal 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+			}
+			
+			#masterCourseList ul li ul li:first-child {
+				font: italic 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+				margin-left: -15px;
+			}
+			#masterCourseList ul li ul#focusCourses li:first-child {
+				font: normal 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+				margin-left: 0px;
+			}
+			*/
+			
+			#masterCourseList ul li {
+				font-weight: 100;
+			}
+			
+			
+			/* customized checkboxes, based off of https://medium.com/claritydesignsystem/pure-css-accessible-checkboxes-and-radios-buttons-54063e759bb3 */
+			#masterCourseList input[type="checkbox"] {
+				opacity: 0;
+			}
+			#masterCourseList input[type="checkbox"] + label  {
+				position: relative;
+				padding-left: 0px;
+				/*display: inline-block;*/
+			}
+			/* make items highlight when using keyboard interface */
+			#masterCourseList input[type="checkbox"]:focus + label::before {
+				border: 2px solid #C4434A;
+			}
+			#masterCourseList label::before {
+				content: "";
+				display: inline-block;
+				height: 10px;
+				width: 10px;
+				border: 2px solid #000;
+				background-color: #fff;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				margin-left: -16px;
+			}
+			#masterCourseList label::after {
+				display: inline-block;
+				height: 6px;
+				width: 6px;
+				
+				background-color: #C4434A;
+				position: absolute;
+				left: 4px;
+				top: 4px;
+				margin-left: -16px;
+			}
+			input[type="checkbox"] + label::after {
+				content: none;
+			}
+			input[type="checkbox"]:checked + label::after {
+				content: "";
+			}
+			
+			#masterCourseList ul li strong {
+				font-weight: 450;
+			}
+			
+			/* fixing visual bugs caused by fieldset/legend use*/
+			fieldset h3 {
+				margin-bottom: 0px;
+			}
+			legend {
+				margin: 0px;
+				
+			}
+			fieldset {
+				border: none;
+				margin: 0px 0px 5px 0px;
+				padding: 5px;
+			}
+			fieldset fieldset {
+				background-color: #F2F2F2;
+				padding: 0px;
+			}
+			fieldset fieldset legend {
+				padding: 5px 5px 0px 5px;
+			}
+			fieldset fieldset fieldset {
+				margin-bottom: 0px;
+			}
+			fieldset fieldset legend {
+				font: italic 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 500;
+				float:left;
+			}
+			fieldset ul {
+				clear: both;
+			}
+			/* end tweaks for fieldset/legend use */
+			
+			input[type="button"] {
+				background-color: #C4434A;
+				color: #fff;
+				width: 100%;
+				font: bold 12px/8px 'Adelle MU';
+				padding: 10px 0px 10px 0px;
+				border: none;
+				cursor: pointer;
+				margin: 10px 0px 10px 0px;
+				text-transform: uppercase;
+				letter-spacing: 3px;
+				border: 1px solid #fff;
+				outline: 4px solid #C4434A;
+			}
+			input[type="button"][value="Save Your Choices"]:hover, input[type="button"][value="Save Your Choices"]:focus {
+				outline-color: #E3939C;
+			} 
+			footer {
+				clear: both;
+				background: rgb(246,246,246);
+				text-align: right;
+				color: #000;
+				padding: 25px 25px 12.5px 0px;
+				width: 1010px;
+				padding: 0px;
+				margin: 0px auto 0px auto;
+			}
+			footer h3 {
+				font: normal 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 600;
+				margin: 0px;
+			}
+			footer h4 {
+				font: italic 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+				margin: 0px;
+			}
+			footer h5 {
+				font: normal 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font-weight: 100;
+				margin: 0px;
+			}
+			
+			/* chart details */
+			
+			.axis line {
+				stroke: #D9D9D9;
+				stroke-width: 1px;
+			}
+			.gridCircle, .outerCircle {
+				fill: none;
+				opacity: 1;
+				stroke-width: 1px;
+				stroke: #D9D9D9;/*F2F2F2;*/
+				
+			}
+		</style>
+	
+	</head>
+	<body>
+		<div id="wrapper">
+			<section id="interface" role="main">
+				<header>
+					<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Fingerprint"/>
+					<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
+				</header>
+				<div id="courseList">
+				
+				</div>
+			</section>
+			<section id="display">
+				<div class="radarChart" id="fingerprintDisplay">
+			
+				</div>
+			</section>
+			<hr />
+		</div>
+			<footer>
+				<h3>AIMS Fingerprint</h3>
+				<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
+				<h5>For more information visit <a href="http://aims.miamioh.edu">aims.miamioh.edu</a></h5>
+			</footer>
+
+
+		<script src="js/radarChart.js"></script>	
+		<script>
+		/* baseline shape: */
+		var data = [
+				  [
+					{axis:"Technology Entrepreneurship",value:0},
+					{axis:"Digital Marketing",value:0},
+					{axis:"User Experience Research (UX)",value:0},
+					{axis:"User Interface Design (UI)",value:0},
+					{axis:"Full-Stack Web Programming",value:0},
+					{axis:"Mobile App Development",value:0},
+					{axis:"Design Thinking",value:0},
+					{axis:"Product Management",value:0},
+					{axis:"Virtual Reality/Augmented Reality",value:0},
+					{axis:"Games",value:0},
+					{axis:"Collaboration & Leadership",value:0}
+				  ]
+				];
+				
+		/* REMOVE
+			////////////////////////////////////////////////////////////// 
+			//////////////////////// Set-Up ////////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 200},
+				width = Math.min(675, window.innerWidth - 10) - margin.left - margin.right,
+				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+		*/
+					
+			
+			////////////////////////////////////////////////////////////// 
+			//////////////////// Draw the Chart ////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+			
+			maxValue=10;
+			
+			var color = "#bb2025";
+				
+			var radarChartOptions = {
+			  	w: 450,				//Width of the circle
+				 h: 450,				//Height of the circle
+				 margin: {top: 60, right: 100, bottom: 60, left: 100}, //The margins of the SVG
+				 levels: Math.ceil(maxValue/2),				//How many levels or inner circles should be drawn
+				 maxValue: maxValue, 			//What is the value that the biggest circle will represent
+				 labelFactor: 1.2, 	//How much farther than the radius of the outer circle should the labels be placed
+				 wrapWidth: 75, 		//The number of pixels after which a label needs to be given a new line
+				 opacityArea: .75, 	//The opacity of the area of the blob
+				 dotRadius: 3, 			//The size of the colored circles of each blog
+				 opacityCircles: 0, 	//The opacity of the circles of each blob
+				 strokeWidth: 1, 		//The width of the stroke around each blob
+				 roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
+				 color: color	//Color function
+			
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChart", data, radarChartOptions);
+		</script>
+	</body>
+	<script>
+		function toggleCourse(courseID, toggleElement) {
+			if($(toggleElement).prop("checked")) {
+				//toggle is on
+				toggleState = 1;
+			} else if($(toggleElement).prop("checked") != undefined){
+				//toggle is off
+				toggleState = -1;
+			} 
+			if(courseID.indexOf("_focus") > 0) {
+				revisedCourseID = courseID.slice(0,courseID.indexOf("_focus"));
+				courseID = revisedCourseID;
+			}
+
+			for(i=0; i<allCourses.length;i++) {
+				if(allCourses[i]["Course"] == courseID && $(toggleElement).prop("checked") != undefined) {
+					courseIndex = i;
+					fingerPrintChange('Technology Entrepreneurship', allCourses[i]["Technology Entrepreneurship"] * toggleState);
+					fingerPrintChange('Digital Marketing', allCourses[i]["Digital Marketing"] * toggleState);
+					fingerPrintChange('User Experience Research (UX)', allCourses[i]["User Experience Research (UX)"] * toggleState);
+					fingerPrintChange('User Interface Design (UI)', allCourses[i]["User Interface Design (UI)"] * toggleState);
+					fingerPrintChange('Full-Stack Web Programming', allCourses[i]["Full-Stack Web Programming"] * toggleState);
+					fingerPrintChange('Mobile App Development', allCourses[i]["Mobile App Development"] * toggleState);
+					fingerPrintChange('Design Thinking', allCourses[i]["Design Thinking"] * toggleState);
+					fingerPrintChange('Product Management', allCourses[i]["Product Management"] * toggleState);
+					fingerPrintChange('Virtual Reality/Augmented Reality', allCourses[i]["Virtual Reality/Augmented Reality"] * toggleState);
+					fingerPrintChange('Games', allCourses[i]["Games"] * toggleState);
+					fingerPrintChange('Collaboration & Leadership', allCourses[i]["Collaboration & Leadership"] * toggleState);
+					redrawRadarChart()
+				}
+			}
+		}
+		function updateData(axisName, newValue) {
+			for(j=0; j<data[0].length; j++) {
+				if(data[0][j]["axis"] == axisName) {
+					data[0][j]["value"] = newValue;
+				}
+			}
+		}
+		
+		function retrieveData(axisName) {
+			for(k=0; k<data[0].length; k++) {
+				if(data[0][k]["axis"] == axisName) {
+					return data[0][k]["value"];
+				}
+			}
+		}
+		function fingerPrintChange(axisName, deltaValue) {
+			deltaValue = deltaValue;
+			previousAxisValue = Number(retrieveData(axisName));
+			updateData(axisName, previousAxisValue+deltaValue);
+			newValue = previousAxisValue+deltaValue;
+		}
+		
+		function redrawRadarChart() {
+			oldMax = maxValue;
+			/* rescale the chart */
+			var tempMax = 0;
+			for(l=0;l<data[0].length;l++) {
+				if(data[0][l].value>tempMax) {
+					tempMax = data[0][l].value;
+				}
+			}
+			
+			if(tempMax >= 10) {
+				maxValue = tempMax;
+			} else {
+				maxValue = 10;
+			}
+			//console.log("maxValue: "+maxValue+" tempMax: "+tempMax);
+			/* draw the chart */
+			var radarChartOptions = {
+			  	w: 450,				//Width of the circle
+				 h: 450,				//Height of the circle
+				 margin: {top: 60, right: 100, bottom: 60, left: 100}, //The margins of the SVG
+				 levels: ((maxValue/2)),				//How many levels or inner circles should be drawn
+				 maxValue: maxValue, 			//What is the value that the biggest circle will represent
+				 labelFactor: 1.2, 	//How much farther than the radius of the outer circle should the labels be placed
+				 wrapWidth: 75, 		//The number of pixels after which a label needs to be given a new line
+				 opacityArea: .75, 	//The opacity of the area of the blob
+				 dotRadius: 3, 			//The size of the colored circles of each blob
+				 opacityCircles: 0, 	//The opacity of the circles of each blob
+				 strokeWidth: 1, 		//The width of the stroke around each blob
+				 roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
+				 color: color	//Color function
+			
+			};
+			
+			/* Animate the change in the chart: */
+			var cfg = {};
+
+			//Put all of the options into a variable called cfg
+			if('undefined' !== typeof radarChartOptions){
+			  for(var i in radarChartOptions){
+				if('undefined' !== typeof radarChartOptions[i]){ cfg[i] = radarChartOptions[i]; }
+			  }//for i
+			}//if
+			
+			var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
+				total = allAxis.length,					//The number of different axes
+				radius = Math.min(cfg.w/2, cfg.h/2), 	//Radius of the outermost circle
+				Format = d3.format('%'),			 	//Percentage formatting
+				angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
+			
+			if(oldMax < maxValue) {
+				oldMax = oldMax+(maxValue-oldMax);
+			}
+			var rScale = d3.scaleLinear()
+				.range([0, radius])
+				.domain([0, oldMax]);
+			
+			
+			
+			
+			//animate the blobs
+			var radarLine = d3.radialLine()
+				.curve(d3.curveLinearClosed)
+				.radius(function(d) { return rScale(d.value); })
+				.angle(function(d,i) {	return i*angleSlice; });
+				
+			d3.selectAll(".radarArea")
+				.transition().duration(300)
+				.attr("d", function(d,i) { return radarLine(d);  });
+			
+			
+			var rScale = d3.scaleLinear()
+				.range([0, radius])
+				.domain([0, maxValue]);
+			
+			
+			//animate the circles used for scales + 50 extra for zoom out
+			d3.selectAll(".gridCircle")
+			   .data(d3.range(1,(cfg.levels+50)))//.reverse()) | removed for zoom out
+			   	.transition().duration(300)
+				.attr("r", function(d, i){ return radius/cfg.levels*d;})
+				.style("opacity", function(d, i){ 
+					//console.log(cfg.levels*d);
+					if((radius/cfg.levels*d) > radius) {
+						return 0;
+					} else {
+						return 1;
+					}
+				})
+				.style("visibility", function(d, i){ 
+					if((radius/cfg.levels*d) > radius) {
+						return "hidden";
+					} else {
+						return "visible";
+					}
+				})
+				.on("end", function(i) {
+					
+					var radarLine = d3.radialLine()
+						.curve(d3.curveLinearClosed)
+						.radius(function(d) { return rScale(d.value); })
+						.angle(function(d,i) {	return i*angleSlice; });
+
+					d3.selectAll(".radarArea")
+						.transition().duration(300)
+						.attr("d", function(d,i) { return radarLine(d);  });
+					
+				});
+			
+			
+			
+			
+			/* for if we don't want animation, simply redraw the chart */	
+			//RadarChart(".radarChart", data, radarChartOptions);
+			
+					
+			
+
+				/// actual values of each axis ///
+				d3.selectAll(".legend")
+					.text(function(d, i){
+						return d;// + " <tspan class='screenReaderOnly'>" + data[0][i]["value"] + "</tspan>";
+					})
+					.call(wrap, cfg.wrapWidth);
+				
+				d3.selectAll(".legend")
+					.append('tspan')
+					.attr('class','screenReadersOnly')
+					.text(function(d, i){
+						currentPercentage = rScale(data[0][i]["value"])/225;
+						currentBand = Math.round(currentPercentage * 5);
+						if(currentBand == 0) {
+							return ": No Emphasis"
+						} else if(currentBand == 1) {
+							return ": Minimal Emphasis";
+						} else if(currentBand == 2) {
+							return ": Some Emphasis";
+						} else if(currentBand == 3) {
+							return ": Moderate Level of Emphasis";
+						} else if(currentBand == 4) {
+							return ": High Level of Emphasis";
+						} else {
+							return ": Maximum Level of Emphasis";
+						}
+					})
+			} 
+			
+		
+		/////////////////////////////////////////////////////////
+		/////////////////// Helper Function /////////////////////
+		/////////////////////////////////////////////////////////
+
+		//Taken from http://bl.ocks.org/mbostock/7555321
+		//Wraps SVG text	
+		function wrap(text, width) {
+		  text.each(function() {
+			var text = d3.select(this),
+				words = text.text().split(/\s+/).reverse(),
+				word,
+				line = [],
+				lineNumber = 0,
+				lineHeight = 1.4, // ems
+				y = text.attr("y"),
+				x = text.attr("x"),
+				dy = parseFloat(text.attr("dy")),
+				tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+
+			while (word = words.pop()) {
+			  line.push(word);
+			  tspan.text(line.join(" "));
+			  if (tspan.node().getComputedTextLength() > width) {
+				line.pop();
+				tspan.text(line.join(" "));
+				line = [word];
+				tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+			  }
+			}
+		  });
+		}//wrap
+		
+		/* Course list parser */
+		
+		$(document).ready(function() {
+			
+			tempRandom = Math.round(Math.random()*10000000);
+		    $.ajax({
+		        type: "GET",
+		        url: "data/CourseMappingforIMSFingerprint.csv#"+tempRandom,
+		        dataType: "text",
+		        success: function(data) {processData(data);}
+		     });
+		});
+		
+		var allCourses = new Array();
+		function processData(allText) {
+			var allTextLines = allText.split(/\r\n|\n/);
+		    var headers = allTextLines[0].split(',');
+		    
+			var lines = [];
+			
+			for (var i=1; i<allTextLines.length; i++) {
+		        var data = allTextLines[i].split(',');
+				if (data.length == headers.length) {
+
+		            var tarr = [];
+		            for (var j=0; j<headers.length; j++) {
+						//edit, original: tarr.push(headers[j]+":"+data[j]);
+		                tarr[headers[j]]=data[j];
+		            }
+		            lines.push(tarr);
+		        }
+		    }
+			allCourses = lines; 
+			
+			changeProgram("imsMajorDigitalConcentration");
+		}
+		
+		function displayCourseList() {
+			var newHTML = "";
+			for(i=0; i<allCourses.length; i++) {
+				locationOfColon = allCourses[i]["Course"].indexOf(":");
+				locationOfSlash = allCourses[i]["Course"].indexOf("/");
+				if(locationOfSlash != -1) {
+					//course contains a crosslisting
+					shortCourse = allCourses[i]["Course"].slice(locationOfSlash+1,locationOfColon);
+					justCourseTitle = allCourses[i]["Course"].slice(locationOfColon+2);
+				} else {
+					shortCourse = allCourses[i]["Course"].slice(0,locationOfColon);
+					justCourseTitle = allCourses[i]["Course"].slice(locationOfColon+2);
+				}
+				htmlLabel = "<strong>"+shortCourse+":</strong> ";
+				htmlLabel += justCourseTitle;
+				shortCourse = shortCourse.toLowerCase().replace(/\s+/g, '');
+				shortCourse = shortCourse.toLowerCase().replace("%20", '');
+				
+				/* check to make sure the potential focus course isn't being used elsewhere in requirements */
+				/* append "_focus" to the focus courses so that options from above appear here */
+				if($("#"+shortCourse).length == 0 || $("#"+shortCourse).parent().parent().hasClass("option")) {
+					newHTML += '<li><input type="checkbox" onClick="toggleCourse(\''+allCourses[i]["Course"]+'_focus\', this);" id="'+shortCourse+'_focus" /> <label for="'+shortCourse+'_focus">' + htmlLabel + "</label></li> \n";
+				}
+			}
+			$("#focusCourses").html(newHTML)
+		}
+		
+		/* load and save functions that pull from the URL location */
+		/* BUG: When redrawing everything, make sure courses that were selected as focus courses are selected in the focus section */
+		function drawPreviousSelectedCourses() {
+			if(location.hash) {
+				storedLocations = String(location.hash);
+				storedLocations = storedLocations.replace(/%20/g, " ")
+				coursesSelected = storedLocations.slice(1);
+				arrayOfCourses = coursesSelected.split(',');
+				console.log("arrayOfCourses");
+				$(arrayOfCourses).each(function(courseIndex) {
+					locationOfColon = arrayOfCourses[courseIndex].indexOf(":");
+					locationOfSlash = arrayOfCourses[courseIndex].indexOf("/");
+					if(locationOfSlash != -1) {
+						//course contains a crosslisting, so remove it
+						shortCourse = arrayOfCourses[courseIndex].slice(locationOfSlash+1,locationOfColon);
+					} else {
+						shortCourse = arrayOfCourses[courseIndex].slice(0,locationOfColon);
+					}
+					
+					shortCourse = shortCourse.toLowerCase().replace(/\s+/g, '');
+					shortCourse = shortCourse.toLowerCase().replace("%20", '');
+					/* append "_focus" for courses that were selected in the focus section */
+					
+					if(arrayOfCourses[courseIndex].indexOf("_focus") > 0) {
+						shortCourse = shortCourse + "_focus";
+					}
+					
+					/* test if this course is available as a choice in the selected program */
+					if($("#"+shortCourse).length) {
+						$("#"+shortCourse).prop("checked", true);
+						toggleCourse(arrayOfCourses[courseIndex], $("#"+shortCourse));
+					} else {
+						/* if no selected courses are available in the selected program, reset everything */
+						redrawRadarChart();
+					}
+				});
+			}
+			
+		}
+		
+		function save() {
+			allSelected = ""
+			$("input[type='checkbox']:checked").each(function(index) {
+				/* extract course titles from JS code */
+				eventHandler = String(($(this).attr("onClick")));
+				courseSelected = eventHandler.slice(14,-9);
+				if(index==0) {
+					allSelected = courseSelected;
+				} else {
+					allSelected = allSelected+","+courseSelected;
+				}
+			});
+			location.hash = allSelected;
+			alert("Your customization saved. Simply bookmark this page or copy/paste the web address to return to these choices.")
+		}
+		
+		/* change programs */
+		function changeProgram(which) {
+			
+			/* gather up the selections */
+			allSelected = "";
+			$("input[type='checkbox']:checked").each(function(index) {
+				/* extract course titles from JS code */
+				eventHandler = String(($(this).attr("onClick")));
+				courseSelected = eventHandler.slice(14,-9);
+				if(index==0) {
+					allSelected = courseSelected;
+				} else {
+					allSelected = allSelected+","+courseSelected;
+				}
+			});
+			
+			//nothing has been selected, which means this is a fresh page so leave the location unchanged
+			if(allSelected.length>0) {
+				location.hash = allSelected;
+			}
+			
+			/* baseline shape: */
+			updateData("Technology Entrepreneurship",0);
+			updateData("Digital Marketing",0);
+			updateData("User Experience Research (UX)",0);
+			updateData("User Interface Design (UI)",0);
+			updateData("Full-Stack Web Programming",0);
+			updateData("Mobile App Development",0);
+			updateData("Design Thinking",0);
+			updateData("Product Management",0);
+			updateData("Virtual Reality/Augmented Reality",0);
+			updateData("Games",0);
+			updateData("Collaboration & Leadership",0);
+					  
+			
+			maxValue=10;
+			randomNumber = Math.floor(Math.random()*10000)
+			
+			
+			$("#courseList").load(which+".html#"+randomNumber, function() {
+				displayCourseList()
+				drawPreviousSelectedCourses();
+			});
+		}
+	</script>
+</html>

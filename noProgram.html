@@ -1,0 +1,33 @@
+<div id="programSelection" >
+	<ul role="tablist" aria-label="IMS Program Selection">
+		<li onClick = "changeProgram('imsMajorDigitalConcentration');" aria-selected="false"  role="tab" tabindex="0" aria-label="IMS Major - Digital Concentration">
+			<h3>IMS Major</h3>
+			<h4>Digital Concentration</h4>
+		</li>
+		<li onClick = "changeProgram('imsMajorAppliedConcentration');" aria-selected="false" tabindex="0"  aria-label="IMS Major - Applied Concentration">
+			<h3>IMS Major</h3>
+			<h4>Applied&nbsp;Concentration</h4>
+		</li>
+		<li onClick = "changeProgram('imsMinor');" role="tab" aria-selected="false" tabindex="0" aria-label="IMS Minor">
+			<h3>IMS Minor</h3>
+			<h4>&nbsp;</h4>
+		</li>
+		<li class="selected" onClick = "changeProgram('noProgram');" role="tab" aria-selected="true" tabindex="0" aria-label="No Program (selected)">
+			<h3>No Program</h3>
+			<h4>&nbsp;</h4>
+		</li>
+	</ul>
+</div>
+<div id="programIntroduction">
+	<p>
+		Not sure which program you're interested in? Use this page to explore different options.
+	</p>
+</div>
+<div id="masterCourseList">
+	<fieldset>
+		<legend>All IMS Courses</legend>
+		<ul id="focusCourses" class="noProgram">
+		</ul>
+	</fieldset>
+	<input type="button" onClick="save();" value="Save Your Choices" />
+</div>
