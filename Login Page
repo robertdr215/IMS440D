@@ -1,0 +1,114 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+<!--
+body {padding-top:50px;font-size:12px;}
+h2 {margin:0px;padding:0px;font-size:12px;font-weight:bold;}
+.bton {border:1px solid #CCC;background:#DDD;}
+.cont {padding:10px;}
+#content {width:600px; margin:0px auto;}
+.selectItem {background:#FFF;position:absolute;top:0px;border:1px solid #000;margin-top:10px;width:400px;z-index:2;display:none;overflow-y:srcoll;}
+.preview {margin:1px; border:1px solid #CCC;}
+#result {margin-left:150px;border:1px solid #CCC;margin-top:10px;}
+.span_align {text-align:right;display:inline-block;width:150px;}
+-->
+</style>
+</head>
+
+<body>
+<form action="" method="post" name="role_form">
+<input id="channels" name="channels" type="hidden" />
+<input id="groups" name="groups" type="hidden" />
+<input id="status_value" name="status_value" type="hidden" />
+<div id="content">
+<p>
+  <span class="span_align">Name：</span><input name="user_name" id="user_name" type="text" />
+</p>
+
+<p>
+  <span class="span_align">Password：</span><input name="passwd" id="passwd" type="password" />
+</p>
+<p>
+  <span class="span_align">Comfired Password：</span><input id="re_passwd" type="password" />
+</p>
+<p>
+  <span class="span_align">e-mail：</span><input name="email" id="email" type="text" />
+</p>
+<p>
+  <span class="span_align">select college：</span><select name="sel_college">
+  <option value="1">Miami University</option>
+  <option value="2">Harvard</option>
+  <option value="3">Stanford</option>
+  </select>
+</p>
+<p>
+  <span class="span_align">Major：</span><input type="button" class="bton pointer" value="select" οnclick="openZjh('previewItem','makeSureItem','selectSub','selectItem');"/>
+  <div id="result">
+    
+    <div class="cont" id="makeSureItem">
+    <input type="checkbox" checked οnclick="copyItem('makeSureItem','previewItem','selectSub');same(this,'selectSub');" value="13" title="ims"/>
+     IMS<input type="checkbox" checked οnclick="copyItem('makeSureItem','previewItem','selectSub');same(this,'selectSub');" value="12" title="mac"/>
+     mac </div>
+  </div>
+</p>
+    
+<div id="bg"> </div>
+
+<p align="center">
+<input type="Submit" value="Submit" />
+</p>
+
+
+<script type="text/javascript">
+
+
+//check e-mail 
+function isEmailFormat(str){
+  if(/(\S)+[@]{1}(\S)+[.]{1}(\w)+/.test(str)){
+   if(str.indexOf('..')>-1){
+      return false;
+   }
+   str=str.trim();
+   var dbCheck = 0;
+   for (var i=0;i< str.length;i++){
+      if(str.charAt(i)==' ') return false;
+      if(str.charAt(i)=='@'){
+        if(dbCheck == 0) {
+         dbCheck = 1;
+        }else{
+         return false;
+        }
+      }
+   }
+   return true;
+  } else {
+   return false;
+  }
+}
+//alert
+function roleSub(){
+ var userName=zjh("user_name").value.trim();
+ var passwd=zjh('passwd').value.trim();
+ var newPasswd=zjh('re_passwd').value.trim();
+ var email=zjh('email').value.trim();
+ if(userName==""){
+  alert("name。");
+  zjh("user_name").focus();
+  return false;
+ }else if(passwd=='') {
+  alert("password");
+  zjh('passwd').focus();
+  return false;
+ }else if(newPasswd != passwd) {
+  alert("The passwords entered twice do not match, please re-enter.");
+  zjh('re_passwd').focus();
+  return false;
+ }else if(email!=''&&!isEmailFormat(email)) {
+  alert("The mailbox format is incorrect. Please re-enter.");
+  zjh('email').focus();
+  return false;
+ }
+    
+</script>
+</body>
+</html>
