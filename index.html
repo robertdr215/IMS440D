@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
-		<title>The AIMS Fingerprint</title>
+		<title>IMS440D - Fingerprint</title>
 
 		<!-- Google fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -326,13 +326,13 @@
 			</section>
 			<section id="display">
 				<div class="radarChart" id="fingerprintDisplay">
-			
+				
 				</div>
 			</section>
 			<hr />
 		</div>
 			<footer>
-				<h3>AIMS Fingerprint</h3>
+				<h3>IMS440D - Fingerprint</h3>
 				<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
 				<h5>For more information visit <a href="http://aims.miamioh.edu">aims.miamioh.edu</a></h5>
 			</footer>
@@ -343,17 +343,11 @@
 		/* baseline shape: */
 		var data = [
 				  [
-					{axis:"Technology Entrepreneurship",value:0},
-					{axis:"Digital Marketing",value:0},
-					{axis:"User Experience Research (UX)",value:0},
-					{axis:"User Interface Design (UI)",value:0},
-					{axis:"Full-Stack Web Programming",value:0},
-					{axis:"Mobile App Development",value:0},
-					{axis:"Design Thinking",value:0},
-					{axis:"Product Management",value:0},
-					{axis:"Virtual Reality/Augmented Reality",value:0},
-					{axis:"Games",value:0},
-					{axis:"Collaboration & Leadership",value:0}
+					{axis:"Major1",value:0},
+					{axis:"Major2",value:0},
+					{axis:"Major3",value:0},
+					{axis:"Major4",value:0},
+					{axis:"Major5",value:0}
 				  ]
 				];
 				
@@ -772,23 +766,16 @@
 			}
 			
 			/* baseline shape: */
-			updateData("Technology Entrepreneurship",0);
-			updateData("Digital Marketing",0);
-			updateData("User Experience Research (UX)",0);
-			updateData("User Interface Design (UI)",0);
-			updateData("Full-Stack Web Programming",0);
-			updateData("Mobile App Development",0);
-			updateData("Design Thinking",0);
-			updateData("Product Management",0);
-			updateData("Virtual Reality/Augmented Reality",0);
-			updateData("Games",0);
-			updateData("Collaboration & Leadership",0);
+			updateData("Major1",0);
+			updateData("Major2",0);
+			updateData("Major3",0);
+			updateData("Major4",0);
+			updateData("Major5",0);
 					  
-			
 			maxValue=10;
 			randomNumber = Math.floor(Math.random()*10000)
 			
-			
+			/* Load the tabs to select different programs */
 			$("#courseList").load(which+".html#"+randomNumber, function() {
 				displayCourseList()
 				drawPreviousSelectedCourses();
