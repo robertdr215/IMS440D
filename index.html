@@ -21,6 +21,7 @@
 			};
 		</script>
 		<style>
+		
 			body {
 				font: normal 11px/15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				margin: 0px;
@@ -74,7 +75,8 @@
 			#fingerprintDisplay {
 				margin-top: 50px;
 				margin-left: 380px;
-				position: fixed;
+				//position: fixed;
+				float:right;
 			}
 			.axisLabel {
 				opacity: 0;
@@ -276,9 +278,9 @@
 				background: rgb(246,246,246);
 				text-align: right;
 				color: #000;
-				padding: 25px 25px 12.5px 0px;
+				padding: 25px 25px 25px 0px;
 				width: 1010px;
-				padding: 0px;
+				//padding: 0px;
 				margin: 0px auto 0px auto;
 			}
 			footer h3 {
@@ -311,34 +313,33 @@
 				
 			}
 		</style>
-	
+		
+		<header>
+			<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Fingerprint"/>
+			<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
+		</header>
 	</head>
+	
 	<body>
 		<div id="wrapper">
 			<section id="interface" role="main">
-				<header>
-					<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Fingerprint"/>
-					<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
-				</header>
-				<div id="courseList">
-				
-				</div>
+				<div id="question" class="question"></div>
+				<div id="answer" class="answer"></div>
+				<div id="nextBtn" class="button">Click for next</div>
 			</section>
 			<section id="display">
-				<div class="radarChart" id="fingerprintDisplay">
-				
-				</div>
+				<div class="radarChart" id="fingerprintDisplay"></div>
 			</section>
 			<hr />
 		</div>
-			<footer>
-				<h3>IMS440D - Fingerprint</h3>
-				<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
-				<h5>For more information visit <a href="http://aims.miamioh.edu">aims.miamioh.edu</a></h5>
-			</footer>
+		
+		<footer>
+			<h3>IMS440D - Fingerprint</h3>
+			<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
+			<h5>For more information visit <a href="http://aims.miamioh.edu">aims.miamioh.edu</a></h5>
+		</footer>
 
-
-		<script src="js/radarChart.js"></script>	
+		<script src="js/radarChart.js"></script>
 		<script>
 		/* baseline shape: */
 		var data = [
@@ -391,6 +392,25 @@
 		</script>
 	</body>
 	<script>
+		var questions = [[1, "question 1"/*add answers */],[2, "question 2"],[3, "question 3"]];
+		setFirstQuestion();
+
+		function setFirstQuestion(){
+		  $("#question").text(questions[0][1]);
+		  $("#question").data("current",[0][0]);
+		}
+
+		$("#nextBtn").click(function(){
+		   setNextQuestion();
+		});
+
+		function setNextQuestion()
+		{
+		  var current = $("#question").data("current");
+		  $("#question").text(questions[current + 1][1]);
+		  $("#question").data("current", current + 1);
+		}
+
 		function toggleCourse(courseID, toggleElement) {
 			if($(toggleElement).prop("checked")) {
 				//toggle is on
