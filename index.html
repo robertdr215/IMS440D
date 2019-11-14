@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
-		<title>IMS440D - Fingerprint</title>
+		<title>IMS440D - Footprint</title>
 
 		<!-- Google fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -72,7 +72,7 @@
 				background-color: #C92838;
 				color: #fff;
 			}
-			#fingerprintDisplay {
+			#footprintDisplay {
 				margin-top: 50px;
 				margin-left: 380px;
 				//position: fixed;
@@ -315,9 +315,10 @@
 		</style>
 		
 		<header>
-			<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Fingerprint"/>
+			<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Footprint"/>
 			<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
 		</header>
+		
 	</head>
 	
 	<body>
@@ -328,13 +329,13 @@
 				<div id="nextBtn" class="button">Click for next</div>
 			</section>
 			<section id="display">
-				<div class="radarChart" id="fingerprintDisplay"></div>
+				<div class="radarChart" id="footprintDisplay"></div>
 			</section>
 			<hr />
 		</div>
 		
 		<footer>
-			<h3>IMS440D - Fingerprint</h3>
+			<h3>IMS440D - Footprint</h3>
 			<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
 			<h5>For more information visit <a href="http://aims.miamioh.edu">aims.miamioh.edu</a></h5>
 		</footer>
@@ -344,11 +345,11 @@
 		/* baseline shape: */
 		var data = [
 				  [
-					{axis:"Major1",value:0},
-					{axis:"Major2",value:0},
-					{axis:"Major3",value:0},
-					{axis:"Major4",value:0},
-					{axis:"Major5",value:0}
+					{axis:"Psychology",value:0},
+					{axis:"Chemistry",value:0},
+					{axis:"International Studies",value:0},
+					{axis:"Economics",value:0},
+					{axis:"Strategic Communication",value:0}
 				  ]
 				];
 				
@@ -392,7 +393,9 @@
 		</script>
 	</body>
 	<script>
-		var questions = [[1, "question 1"/*add answers */],[2, "question 2"],[3, "question 3"]];
+		
+		/* Test code for questions */
+		var questions = [[1, "question 1"],[2, "question 2"],[3, "question 3"]];
 		setFirstQuestion();
 
 		function setFirstQuestion(){
@@ -410,7 +413,9 @@
 		  $("#question").text(questions[current + 1][1]);
 		  $("#question").data("current", current + 1);
 		}
-
+		/** end test code for questions */
+		
+		/* selection handler */
 		function toggleCourse(courseID, toggleElement) {
 			if($(toggleElement).prop("checked")) {
 				//toggle is on
@@ -427,21 +432,17 @@
 			for(i=0; i<allCourses.length;i++) {
 				if(allCourses[i]["Course"] == courseID && $(toggleElement).prop("checked") != undefined) {
 					courseIndex = i;
-					fingerPrintChange('Technology Entrepreneurship', allCourses[i]["Technology Entrepreneurship"] * toggleState);
-					fingerPrintChange('Digital Marketing', allCourses[i]["Digital Marketing"] * toggleState);
-					fingerPrintChange('User Experience Research (UX)', allCourses[i]["User Experience Research (UX)"] * toggleState);
-					fingerPrintChange('User Interface Design (UI)', allCourses[i]["User Interface Design (UI)"] * toggleState);
-					fingerPrintChange('Full-Stack Web Programming', allCourses[i]["Full-Stack Web Programming"] * toggleState);
-					fingerPrintChange('Mobile App Development', allCourses[i]["Mobile App Development"] * toggleState);
-					fingerPrintChange('Design Thinking', allCourses[i]["Design Thinking"] * toggleState);
-					fingerPrintChange('Product Management', allCourses[i]["Product Management"] * toggleState);
-					fingerPrintChange('Virtual Reality/Augmented Reality', allCourses[i]["Virtual Reality/Augmented Reality"] * toggleState);
-					fingerPrintChange('Games', allCourses[i]["Games"] * toggleState);
-					fingerPrintChange('Collaboration & Leadership', allCourses[i]["Collaboration & Leadership"] * toggleState);
+					footprintChange('Psychology', allCourses[i]["Psychology"] * toggleState);
+					footprintChange('Chemistry', allCourses[i]["Chemistry"] * toggleState);
+					footprintChange('International Studies', allCourses[i]["International Studies"] * toggleState);
+					footprintChange('Economics', allCourses[i]["Economics"] * toggleState);
+					footprintChange('Strategic Communication', allCourses[i]["Strategic Communication"] * toggleState);
 					redrawRadarChart()
 				}
 			}
 		}
+		/** end selection handler */
+		
 		function updateData(axisName, newValue) {
 			for(j=0; j<data[0].length; j++) {
 				if(data[0][j]["axis"] == axisName) {
@@ -457,7 +458,7 @@
 				}
 			}
 		}
-		function fingerPrintChange(axisName, deltaValue) {
+		function footprintChange(axisName, deltaValue) {
 			deltaValue = deltaValue;
 			previousAxisValue = Number(retrieveData(axisName));
 			updateData(axisName, previousAxisValue+deltaValue);
@@ -521,9 +522,6 @@
 				.range([0, radius])
 				.domain([0, oldMax]);
 			
-			
-			
-			
 			//animate the blobs
 			var radarLine = d3.radialLine()
 				.curve(d3.curveLinearClosed)
@@ -534,11 +532,9 @@
 				.transition().duration(300)
 				.attr("d", function(d,i) { return radarLine(d);  });
 			
-			
 			var rScale = d3.scaleLinear()
 				.range([0, radius])
 				.domain([0, maxValue]);
-			
 			
 			//animate the circles used for scales + 50 extra for zoom out
 			d3.selectAll(".gridCircle")
@@ -572,15 +568,6 @@
 						.attr("d", function(d,i) { return radarLine(d);  });
 					
 				});
-			
-			
-			
-			
-			/* for if we don't want animation, simply redraw the chart */	
-			//RadarChart(".radarChart", data, radarChartOptions);
-			
-					
-			
 
 				/// actual values of each axis ///
 				d3.selectAll(".legend")
@@ -610,7 +597,6 @@
 						}
 					})
 			} 
-			
 		
 		/////////////////////////////////////////////////////////
 		/////////////////// Helper Function /////////////////////
@@ -644,8 +630,11 @@
 		  });
 		}//wrap
 		
-		/* Course list parser */
-		
+		/* 
+		* Course list parser
+		*
+		*
+		*/
 		$(document).ready(function() {
 			
 			tempRandom = Math.round(Math.random()*10000000);
@@ -765,41 +754,41 @@
 		}
 		
 		/* change programs */
-		function changeProgram(which) {
+		<!-- function changeProgram(which) { -->
 			
-			/* gather up the selections */
-			allSelected = "";
-			$("input[type='checkbox']:checked").each(function(index) {
-				/* extract course titles from JS code */
-				eventHandler = String(($(this).attr("onClick")));
-				courseSelected = eventHandler.slice(14,-9);
-				if(index==0) {
-					allSelected = courseSelected;
-				} else {
-					allSelected = allSelected+","+courseSelected;
-				}
-			});
+			<!-- /* gather up the selections */ -->
+			<!-- allSelected = ""; -->
+			<!-- $("input[type='checkbox']:checked").each(function(index) { -->
+				<!-- /* extract course titles from JS code */ -->
+				<!-- eventHandler = String(($(this).attr("onClick"))); -->
+				<!-- courseSelected = eventHandler.slice(14,-9); -->
+				<!-- if(index==0) { -->
+					<!-- allSelected = courseSelected; -->
+				<!-- } else { -->
+					<!-- allSelected = allSelected+","+courseSelected; -->
+				<!-- } -->
+			<!-- }); -->
 			
-			//nothing has been selected, which means this is a fresh page so leave the location unchanged
-			if(allSelected.length>0) {
-				location.hash = allSelected;
-			}
+			<!-- //nothing has been selected, which means this is a fresh page so leave the location unchanged -->
+			<!-- if(allSelected.length>0) { -->
+				<!-- location.hash = allSelected; -->
+			<!-- } -->
 			
-			/* baseline shape: */
-			updateData("Major1",0);
-			updateData("Major2",0);
-			updateData("Major3",0);
-			updateData("Major4",0);
-			updateData("Major5",0);
+			<!-- /* baseline shape: */ -->
+			<!-- updateData("Psychology",0); -->
+			<!-- updateData("Chemistry",0); -->
+			<!-- updateData("International Studies",0); -->
+			<!-- updateData("Economics",0); -->
+			<!-- updateData("Strategic Communication",0); -->
 					  
-			maxValue=10;
-			randomNumber = Math.floor(Math.random()*10000)
+			<!-- maxValue=10; -->
+			<!-- randomNumber = Math.floor(Math.random()*10000) -->
 			
-			/* Load the tabs to select different programs */
-			$("#courseList").load(which+".html#"+randomNumber, function() {
-				displayCourseList()
-				drawPreviousSelectedCourses();
-			});
-		}
+			<!-- /* Load the tabs to select different programs */ -->
+			<!-- $("#courseList").load(which+".html#"+randomNumber, function() { -->
+				<!-- displayCourseList() -->
+				<!-- drawPreviousSelectedCourses(); -->
+			<!-- }); -->
+		<!-- } -->
 	</script>
 </html>
