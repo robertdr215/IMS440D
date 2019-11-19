@@ -327,13 +327,13 @@
 				<div id="question1" class="question"></div>
 				<div id="answer1" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q1Ans1" name="q1ans">
-					<input type="radio" id="q1Ans2" name="q1ans">
-					<input type="radio" id="q1Ans3" name="q1ans">
-					<input type="radio" id="q1Ans4" name="q1ans">
-					<input type="radio" id="q1Ans5" name="q1ans">
-					<input type="radio" id="q1Ans6" name="q1ans">
-					<input type="radio" id="q1Ans7" name="q1ans">
+					<input type="radio" id="q1Ans1" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], -1.0);">
+					<input type="radio" id="q1Ans2" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], -0.66);">
+					<input type="radio" id="q1Ans3" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], -0.33);">
+					<input type="radio" id="q1Ans4" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], 0.0);">
+					<input type="radio" id="q1Ans5" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], 0.33);">
+					<input type="radio" id="q1Ans6" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], 0.66);">
+					<input type="radio" id="q1Ans7" name="q1ans" onclick="toggleQuestion(survey[qCounter]['Question'], 1.0);">
 					<span class="disagree">Strongly Agree</span>
 				</div>
 				<br><br>
@@ -449,7 +449,7 @@
 		  $("#question3").text(survey[qCounter + 2]["Question"]);
 		  $("#question3").data("current",qCounter + 2);
 		  qCounter += 3;
-		  
+		  		  
 		  // Hide the Next button and replace with Submit button once last question is reached
 		  if (qCounter >= questions.length) {
 			$("#nextBtn").hide();
@@ -469,27 +469,15 @@
 		});
 		
 		/* selection handler */
-		function toggleQuestion(questionID, toggleElement) {
-			if($(toggleElement).prop("checked")) {
-				//toggle is on
-				toggleState = 1;
-			} else if($(toggleElement).prop("checked") != undefined){
-				//toggle is off
-				toggleState = -1;
-			} 
-			if(questionID.indexOf("_focus") > 0) {
-				revisedquestionID = questionID.slice(0,questionID.indexOf("_focus"));
-				questionID = revisedquestionID;
-			}
-
-			for(i=0; i<survey.length;i++) {
-				if(survey[i]["Question"] == questionID /*&& $(toggleElement).prop("checked") != undefined*/) {
+		function toggleQuestion(questionID, weight) {
+			for(i=0; i<=survey.length;i++) {
+				if(survey[i]["Question"] == questionID) {
 					questionIndex = i;
-					footprintChange('Psychology', survey[i]["Psychology"] * toggleState);
-					footprintChange('Chemistry', survey[i]["Chemistry"] * toggleState);
-					footprintChange('International Studies', survey[i]["International Studies"] * toggleState);
-					footprintChange('Economics', survey[i]["Economics"] * toggleState);
-					footprintChange('Strategic Communication', survey[i]["Strategic Communication"] * toggleState);
+					footprintChange('Psychology', survey[i]["Psychology"] * weight);
+					footprintChange('Chemistry', survey[i]["Chemistry"] * weight);
+					footprintChange('International Studies', survey[i]["International Studies"] * weight);
+					footprintChange('Economics', survey[i]["Economics"] * weight);
+					footprintChange('Strategic Communication', survey[i]["Strategic Communication"] * weight);
 					redrawRadarChart()
 				}
 			}
