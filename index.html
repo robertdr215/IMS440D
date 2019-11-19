@@ -74,7 +74,7 @@
 			}
 			#footprintDisplay {
 				margin-top: 50px;
-				margin-left: 380px;
+				//margin-left: 380px;
 				//position: fixed;
 				float:right;
 			}
@@ -324,9 +324,47 @@
 	<body>
 		<div id="wrapper">
 			<section id="interface" role="main">
-				<div id="question" class="question"></div>
-				<div id="answer" class="answer"></div>
-				<div id="nextBtn" class="button">Click for next</div>
+				<div id="question1" class="question"></div>
+				<div id="answer1" class="answer">
+					<span class="agree">Strongly Disagree</span
+					<input type="radio" id="q1Ans1" name="q1ans">
+					<input type="radio" id="q1Ans2" name="q1ans">
+					<input type="radio" id="q1Ans3" name="q1ans">
+					<input type="radio" id="q1Ans4" name="q1ans">
+					<input type="radio" id="q1Ans5" name="q1ans">
+					<input type="radio" id="q1Ans6" name="q1ans">
+					<input type="radio" id="q1Ans7" name="q1ans">
+					<span class="disagree">Strongly Agree</span>
+				</div>
+				<br><br>
+				<div id="question2" class="question"></div>
+				<div id="answer2" class="answer">
+					<span class="agree">Strongly Disagree</span>
+					<input type="radio" id="q1Ans1" name="q1ans">
+					<input type="radio" id="q1Ans2" name="q1ans">
+					<input type="radio" id="q1Ans3" name="q1ans">
+					<input type="radio" id="q1Ans4" name="q1ans">
+					<input type="radio" id="q1Ans5" name="q1ans">
+					<input type="radio" id="q1Ans6" name="q1ans">
+					<input type="radio" id="q1Ans7" name="q1ans"> <!--Set these up so that when clicked they'll multiply the value in the csv by +/- 1, .66, .33, or 0 based on distance from neutral ans -->
+					<span class="disagree">Strongly Agree</span>
+				</div>
+				<br><br>
+				<div id="question3" class="question"></div>
+				<div id="answer3" class="answer">
+					<span class="agree">Strongly Disagree</span>
+					<input type="radio" id="q1Ans1" name="q1ans">
+					<input type="radio" id="q1Ans2" name="q1ans">
+					<input type="radio" id="q1Ans3" name="q1ans">
+					<input type="radio" id="q1Ans4" name="q1ans">
+					<input type="radio" id="q1Ans5" name="q1ans">
+					<input type="radio" id="q1Ans6" name="q1ans">
+					<input type="radio" id="q1Ans7" name="q1ans">
+					<span class="disagree">Strongly Agree</span>
+				</div>
+				<br><br>
+				<button id="nextBtn" class="button">Click for next</button>
+				<button id="submit" class="button">Submit</button>
 			</section>
 			<section id="display">
 				<div class="radarChart" id="footprintDisplay"></div>
@@ -393,30 +431,46 @@
 		</script>
 	</body>
 	<script>
+		// Load initial questions
+		var qCounter = 0;
+		var questions = [[1, "question 1"],[2, "question 2"],[3, "question 3"],[4, "question 4"],[5, "question 5"],[6, "question 6"]];
+		//setQuestions();
 		
-		/* Test code for questions */
-		var questions = [[1, "question 1"],[2, "question 2"],[3, "question 3"]];
-		setFirstQuestion();
+		// Hide the submit button until all questions are cycled through
+		$("#submit").hide();
 
-		function setFirstQuestion(){
-		  $("#question").text(questions[0][1]);
-		  $("#question").data("current",[0][0]);
+		function setQuestions(){
+		  // Set question 1
+		  $("#question1").text(questions[qCounter][1]);
+		  //$("#question1").text(survey[qCounter][0]);
+		  $("#question1").data("current",qCounter);
+		  // Set question 2
+		  $("#question2").text(questions[qCounter + 1][1]);
+		  $("#question2").data("current",qCounter + 1);
+		  // Set question 3
+		  $("#question3").text(questions[qCounter + 2][1]);
+		  $("#question3").data("current",qCounter + 2);
+		  qCounter += 3;
+		  
+		  // Hide the Next button and replace with Submit button once last question is reached
+		  if (qCounter >= questions.length) {
+			$("#nextBtn").hide();
+			$("#submit").show();
+		  }
 		}
-
+		
+		// Toggle next questions
 		$("#nextBtn").click(function(){
-		   setNextQuestion();
+		   setQuestions();
 		});
-
-		function setNextQuestion()
-		{
-		  var current = $("#question").data("current");
-		  $("#question").text(questions[current + 1][1]);
-		  $("#question").data("current", current + 1);
-		}
-		/** end test code for questions */
+		
+		// Submit results and clear survey divs
+		$("#submit").click(function(){
+		   $("#interface").clear();
+		});
 		
 		/* selection handler */
-		function toggleCourse(courseID, toggleElement) {
+		function toggleQuestion(questionID, toggleElement) {
 			if($(toggleElement).prop("checked")) {
 				//toggle is on
 				toggleState = 1;
@@ -424,25 +478,26 @@
 				//toggle is off
 				toggleState = -1;
 			} 
-			if(courseID.indexOf("_focus") > 0) {
-				revisedCourseID = courseID.slice(0,courseID.indexOf("_focus"));
-				courseID = revisedCourseID;
+			if(questionID.indexOf("_focus") > 0) {
+				revisedquestionID = questionID.slice(0,questionID.indexOf("_focus"));
+				questionID = revisedquestionID;
 			}
 
-			for(i=0; i<allCourses.length;i++) {
-				if(allCourses[i]["Course"] == courseID && $(toggleElement).prop("checked") != undefined) {
-					courseIndex = i;
-					footprintChange('Psychology', allCourses[i]["Psychology"] * toggleState);
-					footprintChange('Chemistry', allCourses[i]["Chemistry"] * toggleState);
-					footprintChange('International Studies', allCourses[i]["International Studies"] * toggleState);
-					footprintChange('Economics', allCourses[i]["Economics"] * toggleState);
-					footprintChange('Strategic Communication', allCourses[i]["Strategic Communication"] * toggleState);
+			for(i=0; i<survey.length;i++) {
+				if(survey[i]["Question"] == questionID /*&& $(toggleElement).prop("checked") != undefined*/) {
+					questionIndex = i;
+					footprintChange('Psychology', survey[i]["Psychology"] * toggleState);
+					footprintChange('Chemistry', survey[i]["Chemistry"] * toggleState);
+					footprintChange('International Studies', survey[i]["International Studies"] * toggleState);
+					footprintChange('Economics', survey[i]["Economics"] * toggleState);
+					footprintChange('Strategic Communication', survey[i]["Strategic Communication"] * toggleState);
 					redrawRadarChart()
 				}
 			}
 		}
 		/** end selection handler */
 		
+		// Updates the axes data based on answers given
 		function updateData(axisName, newValue) {
 			for(j=0; j<data[0].length; j++) {
 				if(data[0][j]["axis"] == axisName) {
@@ -451,6 +506,7 @@
 			}
 		}
 		
+		// Retrieves axes data
 		function retrieveData(axisName) {
 			for(k=0; k<data[0].length; k++) {
 				if(data[0][k]["axis"] == axisName) {
@@ -458,6 +514,8 @@
 				}
 			}
 		}
+		
+		// Updates the values of the axes
 		function footprintChange(axisName, deltaValue) {
 			deltaValue = deltaValue;
 			previousAxisValue = Number(retrieveData(axisName));
@@ -465,6 +523,7 @@
 			newValue = previousAxisValue+deltaValue;
 		}
 		
+		// Redraws the chart with updated data
 		function redrawRadarChart() {
 			oldMax = maxValue;
 			/* rescale the chart */
@@ -480,7 +539,7 @@
 			} else {
 				maxValue = 10;
 			}
-			//console.log("maxValue: "+maxValue+" tempMax: "+tempMax);
+			
 			/* draw the chart */
 			var radarChartOptions = {
 			  	w: 450,				//Width of the circle
@@ -629,28 +688,25 @@
 			}
 		  });
 		}//wrap
-		
-		/* 
-		* Course list parser
-		*
-		*
-		*/
+ 
+		// Survey csv parser
 		$(document).ready(function() {
 			
 			tempRandom = Math.round(Math.random()*10000000);
 		    $.ajax({
 		        type: "GET",
-		        url: "data/CourseMappingforIMSFingerprint.csv#"+tempRandom,
+		        url: "data/IMSFootprintSurvey.csv#"+tempRandom,
 		        dataType: "text",
 		        success: function(data) {processData(data);}
 		     });
 		});
 		
-		var allCourses = new Array();
+		// Read in the survey csv and convert it into a usable format
+		var survey = new Array();
 		function processData(allText) {
 			var allTextLines = allText.split(/\r\n|\n/);
 		    var headers = allTextLines[0].split(',');
-		    
+		    			
 			var lines = [];
 			
 			for (var i=1; i<allTextLines.length; i++) {
@@ -658,44 +714,44 @@
 				if (data.length == headers.length) {
 
 		            var tarr = [];
-		            for (var j=0; j<headers.length; j++) {
+		            for (var j=0; j < headers.length; j++) {
 						//edit, original: tarr.push(headers[j]+":"+data[j]);
 		                tarr[headers[j]]=data[j];
 		            }
 		            lines.push(tarr);
 		        }
 		    }
-			allCourses = lines; 
-			
-			changeProgram("imsMajorDigitalConcentration");
+			survey = lines; 
+			setQuestions();
 		}
 		
-		function displayCourseList() {
-			var newHTML = "";
-			for(i=0; i<allCourses.length; i++) {
-				locationOfColon = allCourses[i]["Course"].indexOf(":");
-				locationOfSlash = allCourses[i]["Course"].indexOf("/");
-				if(locationOfSlash != -1) {
-					//course contains a crosslisting
-					shortCourse = allCourses[i]["Course"].slice(locationOfSlash+1,locationOfColon);
-					justCourseTitle = allCourses[i]["Course"].slice(locationOfColon+2);
-				} else {
-					shortCourse = allCourses[i]["Course"].slice(0,locationOfColon);
-					justCourseTitle = allCourses[i]["Course"].slice(locationOfColon+2);
-				}
-				htmlLabel = "<strong>"+shortCourse+":</strong> ";
-				htmlLabel += justCourseTitle;
-				shortCourse = shortCourse.toLowerCase().replace(/\s+/g, '');
-				shortCourse = shortCourse.toLowerCase().replace("%20", '');
+		// Not currently in use
+		<!-- function displayCourseList() { -->
+			<!-- var newHTML = ""; -->
+			<!-- for(i=0; i<survey.length; i++) { -->
+				<!-- locationOfColon = survey[i]["Question"].indexOf(":"); -->
+				<!-- locationOfSlash = survey[i]["Question"].indexOf("/"); -->
+				<!-- if(locationOfSlash != -1) { -->
+					<!-- //course contains a crosslisting -->
+					<!-- shortCourse = survey[i]["Course"].slice(locationOfSlash+1,locationOfColon); -->
+					<!-- justCourseTitle = survey[i]["Course"].slice(locationOfColon+2); -->
+				<!-- } else { -->
+					<!-- shortCourse = survey[i]["Course"].slice(0,locationOfColon); -->
+					<!-- justCourseTitle = survey[i]["Course"].slice(locationOfColon+2); -->
+				<!-- } -->
+				<!-- htmlLabel = "<strong>"+shortCourse+":</strong> "; -->
+				<!-- htmlLabel += justCourseTitle; -->
+				<!-- shortCourse = shortCourse.toLowerCase().replace(/\s+/g, ''); -->
+				<!-- shortCourse = shortCourse.toLowerCase().replace("%20", ''); -->
 				
-				/* check to make sure the potential focus course isn't being used elsewhere in requirements */
-				/* append "_focus" to the focus courses so that options from above appear here */
-				if($("#"+shortCourse).length == 0 || $("#"+shortCourse).parent().parent().hasClass("option")) {
-					newHTML += '<li><input type="checkbox" onClick="toggleCourse(\''+allCourses[i]["Course"]+'_focus\', this);" id="'+shortCourse+'_focus" /> <label for="'+shortCourse+'_focus">' + htmlLabel + "</label></li> \n";
-				}
-			}
-			$("#focusCourses").html(newHTML)
-		}
+				<!-- /* check to make sure the potential focus course isn't being used elsewhere in requirements */ -->
+				<!-- /* append "_focus" to the focus courses so that options from above appear here */ -->
+				<!-- if($("#"+shortCourse).length == 0 || $("#"+shortCourse).parent().parent().hasClass("option")) { -->
+					<!-- newHTML += '<li><input type="checkbox" onClick="toggleQuestion(\''+survey[i]["Course"]+'_focus\', this);" id="'+shortCourse+'_focus" /> <label for="'+shortCourse+'_focus">' + htmlLabel + "</label></li> \n"; -->
+				<!-- } -->
+			<!-- } -->
+			<!-- $("#focusCourses").html(newHTML) -->
+		<!-- } -->
 		
 		/* load and save functions that pull from the URL location */
 		/* BUG: When redrawing everything, make sure courses that were selected as focus courses are selected in the focus section */
@@ -703,31 +759,31 @@
 			if(location.hash) {
 				storedLocations = String(location.hash);
 				storedLocations = storedLocations.replace(/%20/g, " ")
-				coursesSelected = storedLocations.slice(1);
-				arrayOfCourses = coursesSelected.split(',');
-				console.log("arrayOfCourses");
-				$(arrayOfCourses).each(function(courseIndex) {
-					locationOfColon = arrayOfCourses[courseIndex].indexOf(":");
-					locationOfSlash = arrayOfCourses[courseIndex].indexOf("/");
+				questionsAnswered = storedLocations.slice(1);
+				arrayOfQuestions = questionsAnswered.split(',');
+				console.log("arrayOfQuestions");
+				$(arrayOfQuestions).each(function(questionIndex) {
+					locationOfColon = arrayOfQuestions[questionIndex].indexOf(":");
+					locationOfSlash = arrayOfQuestions[questionIndex].indexOf("/");
 					if(locationOfSlash != -1) {
 						//course contains a crosslisting, so remove it
-						shortCourse = arrayOfCourses[courseIndex].slice(locationOfSlash+1,locationOfColon);
+						shortCourse = arrayOfQuestions[questionIndex].slice(locationOfSlash+1,locationOfColon);
 					} else {
-						shortCourse = arrayOfCourses[courseIndex].slice(0,locationOfColon);
+						shortCourse = arrayOfQuestions[questionIndex].slice(0,locationOfColon);
 					}
 					
 					shortCourse = shortCourse.toLowerCase().replace(/\s+/g, '');
 					shortCourse = shortCourse.toLowerCase().replace("%20", '');
 					/* append "_focus" for courses that were selected in the focus section */
 					
-					if(arrayOfCourses[courseIndex].indexOf("_focus") > 0) {
+					if(arrayOfQuestions[questionIndex].indexOf("_focus") > 0) {
 						shortCourse = shortCourse + "_focus";
 					}
 					
 					/* test if this course is available as a choice in the selected program */
 					if($("#"+shortCourse).length) {
 						$("#"+shortCourse).prop("checked", true);
-						toggleCourse(arrayOfCourses[courseIndex], $("#"+shortCourse));
+						toggleQuestion(arrayOfQuestions[questionIndex], $("#"+shortCourse));
 					} else {
 						/* if no selected courses are available in the selected program, reset everything */
 						redrawRadarChart();
@@ -753,7 +809,7 @@
 			alert("Your customization saved. Simply bookmark this page or copy/paste the web address to return to these choices.")
 		}
 		
-		/* change programs */
+		/* change programs - not in use at this time */
 		<!-- function changeProgram(which) { -->
 			
 			<!-- /* gather up the selections */ -->
