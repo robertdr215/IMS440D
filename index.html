@@ -326,7 +326,7 @@
 			<section id="interface" role="main">
 				<div id="question1" class="question"></div>
 				<div id="answer1" class="answer">
-					<span class="agree">Strongly Disagree</span
+					<span class="agree">Strongly Disagree</span>
 					<input type="radio" id="q1Ans1" name="q1ans">
 					<input type="radio" id="q1Ans2" name="q1ans">
 					<input type="radio" id="q1Ans3" name="q1ans">
@@ -340,26 +340,26 @@
 				<div id="question2" class="question"></div>
 				<div id="answer2" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q1Ans1" name="q1ans">
-					<input type="radio" id="q1Ans2" name="q1ans">
-					<input type="radio" id="q1Ans3" name="q1ans">
-					<input type="radio" id="q1Ans4" name="q1ans">
-					<input type="radio" id="q1Ans5" name="q1ans">
-					<input type="radio" id="q1Ans6" name="q1ans">
-					<input type="radio" id="q1Ans7" name="q1ans"> <!--Set these up so that when clicked they'll multiply the value in the csv by +/- 1, .66, .33, or 0 based on distance from neutral ans -->
+					<input type="radio" id="q2Ans1" name="q1ans">
+					<input type="radio" id="q2Ans2" name="q1ans">
+					<input type="radio" id="q2Ans3" name="q1ans">
+					<input type="radio" id="q2Ans4" name="q1ans">
+					<input type="radio" id="q2Ans5" name="q1ans">
+					<input type="radio" id="q2Ans6" name="q1ans">
+					<input type="radio" id="q2Ans7" name="q1ans"> <!--Set these up so that when clicked they'll multiply the value in the csv by +/- 1, .66, .33, or 0 based on distance from neutral ans -->
 					<span class="disagree">Strongly Agree</span>
 				</div>
 				<br><br>
 				<div id="question3" class="question"></div>
 				<div id="answer3" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q1Ans1" name="q1ans">
-					<input type="radio" id="q1Ans2" name="q1ans">
-					<input type="radio" id="q1Ans3" name="q1ans">
-					<input type="radio" id="q1Ans4" name="q1ans">
-					<input type="radio" id="q1Ans5" name="q1ans">
-					<input type="radio" id="q1Ans6" name="q1ans">
-					<input type="radio" id="q1Ans7" name="q1ans">
+					<input type="radio" id="q3Ans1" name="q1ans">
+					<input type="radio" id="q3Ans2" name="q1ans">
+					<input type="radio" id="q3Ans3" name="q1ans">
+					<input type="radio" id="q3Ans4" name="q1ans">
+					<input type="radio" id="q3Ans5" name="q1ans">
+					<input type="radio" id="q3Ans6" name="q1ans">
+					<input type="radio" id="q3Ans7" name="q1ans">
 					<span class="disagree">Strongly Agree</span>
 				</div>
 				<br><br>
@@ -434,21 +434,19 @@
 		// Load initial questions
 		var qCounter = 0;
 		var questions = [[1, "question 1"],[2, "question 2"],[3, "question 3"],[4, "question 4"],[5, "question 5"],[6, "question 6"]];
-		//setQuestions();
 		
 		// Hide the submit button until all questions are cycled through
 		$("#submit").hide();
 
 		function setQuestions(){
 		  // Set question 1
-		  $("#question1").text(questions[qCounter][1]);
-		  //$("#question1").text(survey[qCounter][0]);
+		  $("#question1").text(survey[qCounter]["Question"]);
 		  $("#question1").data("current",qCounter);
 		  // Set question 2
-		  $("#question2").text(questions[qCounter + 1][1]);
+		  $("#question2").text(survey[qCounter + 1]["Question"]);
 		  $("#question2").data("current",qCounter + 1);
 		  // Set question 3
-		  $("#question3").text(questions[qCounter + 2][1]);
+		  $("#question3").text(survey[qCounter + 2]["Question"]);
 		  $("#question3").data("current",qCounter + 2);
 		  qCounter += 3;
 		  
@@ -456,6 +454,7 @@
 		  if (qCounter >= questions.length) {
 			$("#nextBtn").hide();
 			$("#submit").show();
+			// 
 		  }
 		}
 		
@@ -721,6 +720,7 @@
 		            lines.push(tarr);
 		        }
 		    }
+			console.log(lines[0]);
 			survey = lines; 
 			setQuestions();
 		}
