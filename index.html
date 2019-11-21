@@ -327,9 +327,9 @@
 				<div id="question1" class="question"></div>
 				<div id="answer1" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q1Ans1" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -1.0);">
-					<input type="radio" id="q1Ans2" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.66);">
-					<input type="radio" id="q1Ans3" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.33);">
+					<input type="radio" id="q1Ans1" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.5);">
+					<input type="radio" id="q1Ans2" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.34);">
+					<input type="radio" id="q1Ans3" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.17);">
 					<input type="radio" id="q1Ans4" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.0);">
 					<input type="radio" id="q1Ans5" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.33);">
 					<input type="radio" id="q1Ans6" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.66);">
@@ -340,9 +340,9 @@
 				<div id="question2" class="question"></div>
 				<div id="answer2" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q2Ans1" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -1.0);">
-					<input type="radio" id="q2Ans2" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.66);">
-					<input type="radio" id="q2Ans3" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.33);">
+					<input type="radio" id="q2Ans1" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.5);">
+					<input type="radio" id="q2Ans2" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.34);">
+					<input type="radio" id="q2Ans3" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.17);">
 					<input type="radio" id="q2Ans4" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.0);">
 					<input type="radio" id="q2Ans5" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.33);">
 					<input type="radio" id="q2Ans6" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.66);">
@@ -353,9 +353,9 @@
 				<div id="question3" class="question"></div>
 				<div id="answer3" class="answer">
 					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q3Ans1" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -1.0);">
-					<input type="radio" id="q3Ans2" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.66);">
-					<input type="radio" id="q3Ans3" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.33);">
+					<input type="radio" id="q3Ans1" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.5);">
+					<input type="radio" id="q3Ans2" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.34);">
+					<input type="radio" id="q3Ans3" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.17);">
 					<input type="radio" id="q3Ans4" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.0);">
 					<input type="radio" id="q3Ans5" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.33);">
 					<input type="radio" id="q3Ans6" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.66);">
@@ -475,6 +475,8 @@
 		
 		/* selection handler */
 		function toggleQuestion(questionID, radioElement, weight) {			  
+			// Modify weight by constant factor
+			weight = weight * 2;
 			
 			// Cycle through values for that question and update chart
 			for(i=0; i<survey.length;i++) {
