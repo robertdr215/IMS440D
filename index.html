@@ -325,6 +325,8 @@
 	<body>
 		<div id="wrapper">
 			<section id="interface" role="main" class="col">
+				<div id="instructions" class="instructions">Choose how you strongly you identify with the following words</div>
+				<br><br>
 				<div id="question1" class="question"></div>
 				<div id="answer1" class="answer">
 					<span class="agree">Strongly Disagree</span>
@@ -353,7 +355,7 @@
 				<br><br>
 				<div id="question3" class="question"></div>
 				<div id="answer3" class="answer">
-					<span class="agree">Strongly Disagree</span>
+					<span class="agree" name="q3Ans">Strongly Disagree</span>
 					<input type="radio" id="q3Ans1" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.5);">
 					<input type="radio" id="q3Ans2" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.34);">
 					<input type="radio" id="q3Ans3" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.17);">
@@ -361,7 +363,7 @@
 					<input type="radio" id="q3Ans5" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.33);">
 					<input type="radio" id="q3Ans6" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.66);">
 					<input type="radio" id="q3Ans7" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 1.0);">
-					<span class="disagree">Strongly Agree</span>
+					<span class="disagree" name="q3Ans">Strongly Agree</span>
 				</div>
 				<br><br>
 				<button id="nextBtn" class="button">Click for next</button>
@@ -442,21 +444,36 @@
 		  }
 		  
 		  // Set question 1
-		  $("#question1").text(survey[qCounter]["Question"]);
-		  $("#question1").data("current",qCounter);
+		  if ((qCounter) < survey.length) {
+		    $("#question1").text(survey[qCounter]["Question"]);
+		    $("#question1").data("current",qCounter);
+		  } else {
+		    $("#question1").hide();
+		    $("#answer1").hide();
+		  }
 		  // Set question 2
-		  $("#question2").text(survey[qCounter + 1]["Question"]);
-		  $("#question2").data("current",qCounter + 1);
+		  if ((qCounter + 1) < survey.length) {
+		    $("#question2").text(survey[qCounter + 1]["Question"]);
+		    $("#question2").data("current",qCounter + 1);
+		  } else {
+		    $("#question2").hide();
+		    $("#answer2").hide();
+		  }
 		  // Set question 3
-		  $("#question3").text(survey[qCounter + 2]["Question"]);
-		  $("#question3").data("current",qCounter + 2);
+		  if ((qCounter + 2) < survey.length) {
+			$("#question3").text(survey[qCounter + 2]["Question"]);
+			$("#question3").data("current",qCounter + 2);
+		  } else {
+		    $("#question3").hide();
+		    $("#answer3").hide();
+		  }
 		  qCounter += 3;
-		  		  
+		  
+		  console.log(qCounter);
 		  // Hide the Next button and replace with Submit button once last question is reached
 		  if (qCounter >= survey.length) {
 			$("#nextBtn").hide();
 			$("#submit").show();
-			// 
 		  }
 		  
 		  // Show retake quiz button after 1st question page is done
@@ -700,7 +717,7 @@
 			tempRandom = Math.round(Math.random()*10000000);
 		    $.ajax({
 		        type: "GET",
-		        url: "data/IMSFootprintSurvey.csv#"+tempRandom,
+		        url: "data/IMSFootprintCharacteristicsSurvey.csv#"+tempRandom,
 		        dataType: "text",
 		        success: function(data) {processData(data);}
 		     });
