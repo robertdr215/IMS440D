@@ -365,6 +365,7 @@
 				<br><br>
 				<button id="nextBtn" class="button">Click for next</button>
 				<button id="submit" class="button">Submit</button>
+				<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>
 			</section>
 			<section id="display">
 				<div class="radarChart" id="footprintDisplay"></div>
@@ -424,8 +425,9 @@
 		// Counter to track position in survey
 		var qCounter = 0;
 
-		// Hide the submit button until all questions are cycled through
+		// Hide the submit and retake buttons at startup
 		$("#submit").hide();
+		$("#retake").hide();
 
 		function setQuestions(){
 		  // Re-enable all radio buttons for new set of questions and clear old answers
@@ -450,6 +452,12 @@
 		  if (qCounter >= survey.length) {
 			$("#nextBtn").hide();
 			$("#submit").show();
+			// 
+		  }
+		  
+		  // Show retake quiz button after 1st question page is done
+		  if (qCounter > 3) {
+			$("#retake").show();
 			// 
 		  }
 		}
