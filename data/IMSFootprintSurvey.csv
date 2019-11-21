@@ -1,22 +1,9 @@
 Question,Psychology,Chemistry,International Studies,Economics,Strategic Communication
-Adventurous,0,1,1,0,1
-Outgoing,0,1,1,1,1
-Curious,0,1,0,1,1
-Helpful,1,1,1,1,1
-Detail Oriented,1,1,1,1,1
-Logical,1,0,1,1,1
-Observant,1,1,1,0,1
-Patient,0,0,0,1,0
-Practical,1,0,0,1,1
-Reliable,1,1,1,1,1
-Honest,1,1,1,1,1
-Organized,1,1,1,1,1
-Flexible,0,0,1,0,1
-Analytical,0,1,1,1,0
-Creative,1,0,1,0,1
-Motivated,1,1,1,1,1
-Indpendent,1,1,1,1,1
-Results Oriented,0,1,1,1,1
-Optimisitc,1,0,1,0,1
-Assertive,0,1,1,1,1
-Diplomatic,0,0,1,1,0
+Question 1,1,1,1,1,1
+Question 2,1,0,1,0,0
+Question 3,0,1,1,0,1
+Question 4,1,0,1,1,0
+Question 5,0,1,1,0,0
+Question 6,1,0,1,0,0
+Question 7,1,0,1,1,0
+Question 8,0,1,1,0,0
