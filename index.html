@@ -325,7 +325,7 @@
 	<body>
 		<div id="wrapper">
 			<section id="interface" role="main" class="col">
-				<div id="instructions" class="instructions">Choose how you strongly you identify with the following words</div>
+				<div id="instructions" class="instructions">Choose how you strongly you identify with the following statements:</div>
 				<br><br>
 				<div id="question1" class="question"></div>
 				<div id="answer1" class="answer">
@@ -717,7 +717,7 @@
 			tempRandom = Math.round(Math.random()*10000000);
 		    $.ajax({
 		        type: "GET",
-		        url: "data/IMSFootprintCharacteristicsSurvey.csv#"+tempRandom,
+		        url: "data/Survey.csv#"+tempRandom,
 		        dataType: "text",
 		        success: function(data) {processData(data);}
 		     });
