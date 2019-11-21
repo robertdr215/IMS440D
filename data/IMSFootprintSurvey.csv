@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Question,Psychology,Chemistry,International Studies,Economics,Strategic Communication
 Question 1,1,1,1,1,1
 Question 2,1,0,1,0,0
@@ -7,4 +8,15 @@ Question 5,0,1,1,0,0
 Question 6,1,0,1,0,0
 Question 7,1,0,1,1,0
 Question 8,0,1,1,0,0
+=======
+Question,Psychology,Chemistry,International Studies,Economics,Strategic Communication
+Question 1,1,1,1,1,1
+Question 2,1,0,1,0,0
+Question 3,0,1,1,0,1
+Question 4,1,0,1,1,0
+Question 5,0,1,1,0,0
+Question 6,1,0,1,0,0
+Question 7,1,0,1,1,0
+Question 8,0,1,1,0,0
+>>>>>>> 5f963970ba8043d2d82929978fd707a52d156f6e
 Question 9,1,0,1,0,0
