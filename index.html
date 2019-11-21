@@ -366,6 +366,7 @@
 				<button id="nextBtn" class="button">Click for next</button>
 				<button id="submit" class="button">Submit</button>
 				<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>
+				
 			</section>
 			<section id="display">
 				<div class="radarChart" id="footprintDisplay"></div>
@@ -469,7 +470,7 @@
 		
 		// Submit results and clear survey divs
 		$("#submit").click(function(){
-		   $("#interface").clear();
+		   $("#interface").html('<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>');
 		});
 		
 		/* selection handler */
