@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
-		<title>IMS440D - Footprint</title>
+		<title>Footprint - IMS440D</title>
 
 		<!-- Google fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
 		<style>
 		
 			body {
-				font: normal 11px/15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font: normal 14px/15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				margin: 0px;
 				padding: 0px;
 				background: rgb(246,246,246);
@@ -66,12 +66,15 @@
 				float: left;
 			}
 			header {
-				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				font: bold 15px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				width: full;
 				margin: 0px;
-				padding: 0px;
+				padding: 1px;
 				background-color: #C92838;
 				color: #fff;
+			}
+			#logo {
+				padding-left: 15px;
 			}
 			#footprintDisplay {
 				margin-top: 50px;
@@ -132,6 +135,12 @@
 			}
 			#masterCourseList h3 {
 				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			}
+			#instructions {
+				font-size: 18px;
+			}
+			.question {
+				padding-bottom: 5px;
 			}
 			#masterCourseList ul {
 				list-style-type: none;
@@ -316,7 +325,7 @@
 		</style>
 		
 		<header>
-			<img src="img/logo_fingerprint.png" width="380" alt = "Armstrong Institute for Interactive Media Studies (AIMS) Footprint"/>
+			<img id="logo" src="img/logo.png" width="50" alt = "IMS440D - Footprint"/>Footprint
 			<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
 		</header>
 		
@@ -364,6 +373,7 @@
 				<br><br>
 			</section>
 			<section id="interface" role="main" class="col-6">
+				<br>
 				<div id="instructions" class="instructions">Choose how you strongly you identify with the following statements:</div>
 				<br><br>
 				<div id="question1" class="question"></div>
