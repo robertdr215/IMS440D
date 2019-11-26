@@ -52,7 +52,7 @@
 				border: none;
 			}
 			#wrapper {
-				width: 1015px;
+				width: full;
 				margin: 0px auto 25px auto;
 				border-right: 5px solid #E8E8E8;
 				border-bottom: 5px solid #E8E8E8;
@@ -62,12 +62,12 @@
 				box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
 			}
 			#interface {
-				width: 380px;
+				width: full;
 				float: left;
 			}
 			header {
 				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				width: 380px;
+				width: full;
 				margin: 0px;
 				padding: 0px;
 				background-color: #C92838;
@@ -77,7 +77,7 @@
 				margin-top: 50px;
 				//margin-left: 380px;
 				//position: fixed;
-				float:right;
+				float:left;
 			}
 			.axisLabel {
 				opacity: 0;
@@ -324,7 +324,7 @@
 	
 	<body>
 		<div id="wrapper">
-			<section id="interface" role="main" class="col">
+			<section id="interface" role="main" class="col-4">
 				<div id="instructions" class="instructions">Choose how you strongly you identify with the following statements:</div>
 				<br><br>
 				<div id="question1" class="question"></div>
@@ -371,9 +371,7 @@
 				<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>
 				
 			</section>
-			<section class="col" id="display">
-				<div class="radarChart" id="footprintDisplay"></div>
-			</section>
+			<div class="radarChart col-6" id="footprintDisplay"></div>
 			<hr />
 		</div>
 		
