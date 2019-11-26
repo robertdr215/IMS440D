@@ -324,7 +324,46 @@
 	
 	<body>
 		<div id="wrapper">
-			<section id="interface" role="main" class="col-4">
+			<section id="resultsDescription" role="main" class="col-6">
+				<div id="major1" class="major">
+					<h3 id="major1Name"></h3>
+					<h5 id="major1Match"></h5>
+					<p id="major1Desc">This program focuses on changes in the brain, how families affect children, how people form impressions of other people, how people make decisions, how communities and cultures affect people’s lives.</p>
+					<a href="https://miamioh.edu/cas/academics/departments/psychology/academics/undergraduate-studies/psychology-major/" target="_blank">Click here for more information.</a>
+				</div>
+				<br><br>
+				<div id="major2" class="major">
+					<h3 id="major2Name"></h3>
+					<h5 id="major2Match"></h5>
+					<p id="major2Desc">This program is for students who enjoy chemistry and biology, and who want to explore how chemistry drives life processes</p>
+					<a href="http://miamioh.edu/cas/academics/departments/chemistry-biochemistry/academics/majors/chemistry-bs/" target="_blank">Click here for more information.</a>				
+				</div>
+				<br><br>
+				<div id="major3" class="major">
+					<h3 id="major3Name"></h3>
+					<h5 id="major3Match"></h5>
+					<p id="major3Desc">This program includes an interdisciplinary core of study in world politics, international economics, world history, political geography, intercultural relations (anthropology), and foreign language.</p>
+					<a href="https://miamioh.edu/academics/majors-minors/majors/international-studies.html" target="_blank">Click here for more information.</a>
+				</div>
+				<br><br>
+				<div id="major4" class="major">
+					<h3 id="major4Name"></h3>
+					<h5 id="major4Match"></h5>
+					<p id="major4Desc">This program focuses on how we use our resources for the production, distribution, and consumption of goods and services.</p>
+					<a href="https://miamioh.edu/academics/majors-minors/majors/economics.html" target="_blank">Click here for more information.</a>
+				</div>
+				<br><br>
+				<div id="major5" class="major">
+					<h3 id="major5Name"></h3>
+					<h5 id="major5Match"></h5>
+					<p id="major5Desc">This program focuses on how individuals and organizations use communication and media to negotiate their role in highly mediated societies.</p>
+					<a href="https://miamioh.edu/academics/majors-minors/majors/strategic-communication.html" target="_blank">Click here for more information.</a>
+				</div>
+				<br><br>
+				<button id="retake" class="button retake" onclick="window.location.reload();">Retake Quiz</button>
+				<br><br>
+			</section>
+			<section id="interface" role="main" class="col-6">
 				<div id="instructions" class="instructions">Choose how you strongly you identify with the following statements:</div>
 				<br><br>
 				<div id="question1" class="question"></div>
@@ -366,15 +405,14 @@
 					<span class="disagree" name="q3Ans">Strongly Agree</span>
 				</div>
 				<br><br>
+				<div id="progressBar" class="progressBar"></div>
 				<button id="nextBtn" class="button">Click for next</button>
 				<button id="submit" class="button">Submit</button>
-				<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>
-				
 			</section>
 			<div class="radarChart col-6" id="footprintDisplay"></div>
 			<hr />
 		</div>
-		
+
 		<footer>
 			<h3>IMS440D - Footprint</h3>
 			<h4>&copy;2019 - Armstrong Institute for Interactive Media Studies</h4>
@@ -428,8 +466,10 @@
 	<script>
 		// Counter to track position in survey
 		var qCounter = 0;
+		var surveyLength = 0;
 
 		// Hide the submit and retake buttons at startup
+		$("#resultsDescription").hide();
 		$("#submit").hide();
 		$("#retake").hide();
 
@@ -481,15 +521,44 @@
 		  }
 		}
 		
-		// Toggle next questions
+		// Toggle next questions and update progress bar
 		$("#nextBtn").click(function(){
-		   setQuestions();
+			var prVal = ((qCounter / surveyLength)*(100)).toFixed(0);
+			var prStr = "% complete";
+			$("#progressBar").text(prVal + prStr);
+			setQuestions();
 		});
 		
-		// Submit results and clear survey divs
+		// Submit results, hide interface div, and show results 
 		$("#submit").click(function(){
-		   $("#interface").html('<button id="retake" class="button" onclick="window.location.reload();">Retake Quiz</button>');
+		   setResults();
 		});
+		
+		/* results calculator */
+		function setResults() {
+			// Major 1 data
+			$("#major1Name").text((data[0][0]["axis"]));
+			$("#major1Match").text((((data[0][0]["value"]) / surveyLength) * 100).toFixed(1) + "% Match");
+			
+			// Major 2 data
+			$("#major2Name").text((data[0][1]["axis"]));
+			$("#major2Match").text((((data[0][1]["value"]) / surveyLength) * 100).toFixed(1) + "% Match");
+			
+			// Major 3 data
+			$("#major3Name").text((data[0][2]["axis"]));
+			$("#major3Match").text((((data[0][2]["value"]) / surveyLength) * 100).toFixed(1) + "% Match");
+			
+			// Major 4 data
+			$("#major4Name").text((data[0][3]["axis"]));
+			$("#major4Match").text((((data[0][3]["value"]) / surveyLength) * 100).toFixed(1) + "% Match");
+			
+			// Major 5 data
+			$("#major5Name").text((data[0][4]["axis"]));
+			$("#major5Match").text((((data[0][4]["value"]) / surveyLength) * 100).toFixed(1) + "% Match");
+			
+			/* replace interface div html with results data */
+			$("#interface").html($("#resultsDescription").html());
+		}
 		
 		/* selection handler */
 		function toggleQuestion(questionID, radioElement, weight) {			  
@@ -742,6 +811,7 @@
 		        }
 		    }
 			survey = lines; 
+			surveyLength = survey.length;
 			setQuestions();
 		}
 		
