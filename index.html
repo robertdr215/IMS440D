@@ -131,6 +131,73 @@
 			/* CSS by Matthew Ball - matthewball.me */
 			
 			
+			
+			/* Radio button styling */
+				/* The container */
+				.container {
+				  display: block;
+				  position: relative;
+				  padding-left: 35px;
+				  margin-bottom: 12px;
+				  cursor: pointer;
+				  font-size: 22px;
+				  -webkit-user-select: none;
+				  -moz-user-select: none;
+				  -ms-user-select: none;
+				  user-select: none;
+				}
+
+				/* Hide the browser's default radio button */
+				.container input {
+				  position: absolute;
+				  opacity: 0;
+				  cursor: pointer;
+				}
+
+				/* Create a custom radio button */
+				.checkmark {
+				  position: absolute;
+				  top: 0;
+				  left: 0;
+				  height: 25px;
+				  width: 25px;
+				  background-color: #eee;
+				  border-radius: 50%;
+				}
+
+				/* On mouse-over, add a grey background color */
+				.container:hover input ~ .checkmark {
+				  background-color: #ccc;
+				}
+
+				/* When the radio button is checked, add a blue background */
+				.container input:checked ~ .checkmark {
+				  background-color: #2196F3;
+				}
+
+				/* Create the indicator (the dot/circle - hidden when not checked) */
+				.checkmark:after {
+				  content: "";
+				  position: absolute;
+				  display: none;
+				}
+
+				/* Show the indicator (dot/circle) when checked */
+				.container input:checked ~ .checkmark:after {
+				  display: block;
+				}
+
+				/* Style the indicator (dot/circle) */
+				.container .checkmark:after {
+					top: 9px;
+					left: 9px;
+					width: 8px;
+					height: 8px;
+					border-radius: 50%;
+					background: white;
+				}
+			/* end radio button styling */
+			
 			body {
 				font: normal 14px/15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				margin: 0px;
@@ -198,148 +265,19 @@
 				font-size: 0px;
 			}
 			
-			#courseList {
-				width: 380px;
-				background-color: #E8E8E8;
-				padding-bottom: 150px;
-			}
-			#programSelection h3 {
-				font: bold 12px/8px 'Adelle MU';
-				margin: 10px 0px 3px 0px;
-				padding: 0px;
-			}
-			#programSelection h4 {
-				font: italic 9px/8px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-weight: 100;
-				margin: 0px 0px 10px 0px;
-				padding: 0px;
-			}
-			#programSelection ul {
-				list-style-type: none;
-				margin: 0px;
-				padding: 0px;
-			}
-			#programSelection ul li {
-				width: 25%;
-				float: left;
-				text-align: center;
-				background-color: #772A2F;
-				color: #DEDDDE;
-			}
-			#programSelection ul li.selected {
-				background-color: #C92838;
-				color: #fff;
-			}
-			
-			#programIntroduction {
-				clear: both;
-				background-color: #E8E8E8;
-			}
-			#programIntroduction p {
-				padding: 10px 10px 15px 10px;
-			}
-			
-			#masterCourseList {
-				padding: 0px 10px 0px 10px;
-			}
-			#masterCourseList h3 {
-				font: bold 12px 'Adelle MU', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-			}
 			#instructions {
 				font-size: 18px;
 			}
 			.question {
 				padding-bottom: 5px;
 			}
-			#masterCourseList ul {
-				list-style-type: none;
-				background-color: #F2F2F2;
-				margin-top: 5px;
-				margin-bottom: 5px;
-				padding: 5px 0px 5px 15px;
-			}
-			/* turning off because it causes problem with fieldset
-			#masterCourseList ul:hover {
-				background-color: #fff;
-			}
-			*/
-			#masterCourseList ul li ul {
-				padding: 0px 0px 0px 15px;
-				background-color: transparent;
-			}
-			/* bookmark */
-			/* removing all this due to use of legend and fieldset
-			#masterCourseList ul li:first-child {
-				font: italic 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-weight: 500;
-			}
-			#masterCourseList ul.noProgram li:first-child {
-				font: normal 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-weight: 100;
-			}
-			
-			#masterCourseList ul li ul li:first-child {
-				font: italic 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-weight: 100;
-				margin-left: -15px;
-			}
-			#masterCourseList ul li ul#focusCourses li:first-child {
-				font: normal 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				font-weight: 100;
-				margin-left: 0px;
-			}
-			*/
-			
-			#masterCourseList ul li {
-				font-weight: 100;
-			}
-			
-			
-			/* customized checkboxes, based off of https://medium.com/claritydesignsystem/pure-css-accessible-checkboxes-and-radios-buttons-54063e759bb3 */
-			#masterCourseList input[type="checkbox"] {
-				opacity: 0;
-			}
-			#masterCourseList input[type="checkbox"] + label  {
-				position: relative;
-				padding-left: 0px;
-				/*display: inline-block;*/
-			}
-			/* make items highlight when using keyboard interface */
-			#masterCourseList input[type="checkbox"]:focus + label::before {
-				border: 2px solid #C4434A;
-			}
-			#masterCourseList label::before {
-				content: "";
-				display: inline-block;
-				height: 10px;
-				width: 10px;
-				border: 2px solid #000;
-				background-color: #fff;
-				position: absolute;
-				left: 0px;
-				top: 0px;
-				margin-left: -16px;
-			}
-			#masterCourseList label::after {
-				display: inline-block;
-				height: 6px;
-				width: 6px;
-				
-				background-color: #C4434A;
-				position: absolute;
-				left: 4px;
-				top: 4px;
-				margin-left: -16px;
-			}
+
+
 			input[type="checkbox"] + label::after {
 				content: none;
 			}
 			input[type="checkbox"]:checked + label::after {
 				content: "";
-			}
-			
-			#masterCourseList ul li strong {
-				font-weight: 450;
 			}
 			
 			/* fixing visual bugs caused by fieldset/legend use*/
@@ -485,48 +423,114 @@
 				<br>
 				<div id="instructions" class="instructions">Choose how you strongly you identify with the following statements:</div>
 				<br><br>
+				
 				<div id="question1" class="question"></div>
-				<div id="answer1" class="answer">
-					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q1Ans1" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.5);">
-					<input type="radio" id="q1Ans2" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.34);">
-					<input type="radio" id="q1Ans3" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.17);">
-					<input type="radio" id="q1Ans4" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.0);">
-					<input type="radio" id="q1Ans5" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.33);">
-					<input type="radio" id="q1Ans6" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.66);">
-					<input type="radio" id="q1Ans7" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 1.0);">
-					<span class="disagree">Strongly Agree</span>
-				</div>
-				<br><br>
+					
+				<section id="answer1">
+					<label class="container">Strongly Agree
+						<input type="radio" id="q1Ans1" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 1.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Agree
+						<input type="radio" id="q1Ans2" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.66);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Agree
+						<input type="radio" id="q1Ans3" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Neutral
+						<input type="radio" id="q1Ans4" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, 0.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Disagree
+						<input type="radio" id="q1Ans5" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.17);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Disagree
+						<input type="radio" id="q1Ans6" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Strongly Disagree
+						<input type="radio" id="q1Ans7" name="q1Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 3]['Question'], this, -0.5);">
+						<span class="checkmark"></span>
+					</label>
+				</section>
+				
 				<div id="question2" class="question"></div>
-				<div id="answer2" class="answer">
-					<span class="agree">Strongly Disagree</span>
-					<input type="radio" id="q2Ans1" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.5);">
-					<input type="radio" id="q2Ans2" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.34);">
-					<input type="radio" id="q2Ans3" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.17);">
-					<input type="radio" id="q2Ans4" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.0);">
-					<input type="radio" id="q2Ans5" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.33);">
-					<input type="radio" id="q2Ans6" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.66);">
-					<input type="radio" id="q2Ans7" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 1.0);">
-					<span class="disagree">Strongly Agree</span>
-				</div>
-				<br><br>
+				
+				<section id="answer2">
+					<label class="container">Strongly Agree
+						<input type="radio" id="q2Ans1" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 1.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Agree
+						<input type="radio" id="q2Ans2" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.66);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Agree
+						<input type="radio" id="q2Ans3" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Neutral
+						<input type="radio" id="q2Ans4" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, 0.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Disagree
+						<input type="radio" id="q2Ans5" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.17);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Disagree
+						<input type="radio" id="q2Ans6" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Strongly Disagree
+						<input type="radio" id="q2Ans7" name="q2Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 2]['Question'], this, -0.5);">
+						<span class="checkmark"></span>
+					</label>
+				</section>
+
 				<div id="question3" class="question"></div>
-				<div id="answer3" class="answer">
-					<span class="agree" name="q3Ans">Strongly Disagree</span>
-					<input type="radio" id="q3Ans1" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.5);">
-					<input type="radio" id="q3Ans2" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.34);">
-					<input type="radio" id="q3Ans3" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.17);">
-					<input type="radio" id="q3Ans4" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.0);">
-					<input type="radio" id="q3Ans5" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.33);">
-					<input type="radio" id="q3Ans6" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.66);">
-					<input type="radio" id="q3Ans7" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 1.0);">
-					<span class="disagree" name="q3Ans">Strongly Agree</span>
+				
+				<section id="answer3">
+					<label id="answer1" class="container">Strongly Agree
+						<input type="radio" id="q3Ans1" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 1.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Agree
+						<input type="radio" id="q3Ans2" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.66);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Agree
+						<input type="radio" id="q3Ans3" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Neutral
+						<input type="radio" id="q3Ans4" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, 0.0);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Somewhat Disagree
+						<input type="radio" id="q3Ans5" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.17);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Disagree
+						<input type="radio" id="q3Ans6" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.33);">
+						<span class="checkmark"></span>
+					</label>
+					<label class="container">Strongly Disagree
+						<input type="radio" id="q3Ans7" name="q3Ans" class="radioAnswer" onclick="toggleQuestion(survey[qCounter - 1]['Question'], this, -0.5);">
+						<span class="checkmark"></span>
+					</label>
+				</section>
+				
+				<br><br>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
 				</div>
 				<br><br>
-				<div id="progressBar" class="progressBar"></div>
 				<button id="nextBtn" class="button">&nbsp;Continue<svg class="bi bi-chevron-right" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg></button>
 				<button id="submit" class="button">View Results</button>
+				<br>
 			</section>
 			<div class="radarChart col-6" id="footprintDisplay"></div>
 			<hr />
@@ -587,11 +591,12 @@
 		var qCounter = 0;
 		var surveyLength = 0;
 
-		// Hide the submit and retake buttons at startup
+		// Hide the submit and retake buttons, and progress bar, at startup
 		$("#resultsDescription").hide();
 		$("#submit").hide();
 		$("#retake").hide();
-
+		$(".progress").hide();
+		
 		function setQuestions(){
 		  // Re-enable all radio buttons for new set of questions and clear old answers
 		  var x = document.getElementsByClassName("radioAnswer");
@@ -626,7 +631,6 @@
 		  }
 		  qCounter += 3;
 		  
-		  console.log(qCounter);
 		  // Hide the Next button and replace with Submit button once last question is reached
 		  if (qCounter >= survey.length) {
 			$("#nextBtn").hide();
@@ -636,15 +640,16 @@
 		  // Show retake quiz button after 1st question page is done
 		  if (qCounter > 3) {
 			$("#retake").show();
-			// 
+			var bar = document.getElementsByClassName("progress-bar");
+			var prVal = Math.min(99,((qCounter / surveyLength)*(100)).toFixed(0));
+			bar[0].style.width = prVal+"%";
+			$(".progress-bar").html(prVal+"%");
+			$(".progress").show();
 		  }
 		}
 		
 		// Toggle next questions and update progress bar
 		$("#nextBtn").click(function(){
-			var prVal = ((qCounter / surveyLength)*(100)).toFixed(0);
-			var prStr = "% complete";
-			$("#progressBar").text(prVal + prStr);
 			setQuestions();
 		});
 		
