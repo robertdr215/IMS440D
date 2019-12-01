@@ -22,7 +22,14 @@
 			};
 		</script>
 		<style>
-			/* BEGIN MB */
+			/* CSS by Matthew Ball - matthewball.me */
+            
+            * {
+                -webkit-transition: all 1s ease-out;
+			    -moz-transition: all 1s ease-out;
+			    -o-transition: all 1s ease-out;
+			    transition: all 1s ease-out;
+            }
 			
 			div#instructions {
 			    text-align: center;
@@ -41,6 +48,7 @@
 			.answer {
 			    text-align: center;
 			    font-size: 15px;
+                padding-top: 1.5em;
 			}
 
 			header {
@@ -88,7 +96,39 @@
 			    text-align: center;
 			    padding: 10px;
 			}
-			/* END MB */
+            
+            .headerTitle {
+                font-size: 5em;
+                vertical-align: middle;
+            }
+
+           .major {
+                padding-left: 4em;
+            }
+            
+            #major1 {
+                padding-top: 2em;
+            }
+            
+            h3 {
+                font-weight: 900;
+            }
+            
+            header a {
+                text-decoration: none;
+                color: white;
+            }
+            
+            header a:hover {
+                text-decoration: none;
+                color: white;
+            }
+            
+            header:hover a {
+                opacity: .6;
+            }
+            
+			/* CSS by Matthew Ball - matthewball.me */
 			
 			
 			body {
@@ -110,7 +150,8 @@
 				text-decoration: none;
 			}
 			a:hover {
-				text-decoration: underline;
+				text-decoration: none;
+                color: black;
 			}
 			hr {
 				clear: both;
@@ -393,7 +434,7 @@
 		</style>
 		
 		<header>
-			<img id="logo" src="img/logo.png" width="50" alt = "IMS440D - Footprint"/><span class="headerTitle">Footprint</span>
+			<a href="index.html"><img id="logo" src="img/logo.png" width="50" alt = "IMS440D - Footprint"/><span class="headerTitle">Footprint</span></a>
 			<!-- src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" -->
 		</header>
 		
@@ -484,8 +525,8 @@
 				</div>
 				<br><br>
 				<div id="progressBar" class="progressBar"></div>
-				<button id="nextBtn" class="button">Click for next</button>
-				<button id="submit" class="button">Submit</button>
+				<button id="nextBtn" class="button">&nbsp;Continue<svg class="bi bi-chevron-right" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg></button>
+				<button id="submit" class="button">View Results</button>
 			</section>
 			<div class="radarChart col-6" id="footprintDisplay"></div>
 			<hr />
